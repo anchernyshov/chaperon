@@ -1,4 +1,4 @@
-package com.github.anchernyshov.chaperon.viewmodel;
+package com.github.anchernyshov.chaperon.viewmodel
 
 import android.os.Handler
 import android.os.Looper
@@ -39,8 +39,8 @@ class AuthActivityViewModel: ViewModel() {
         isProgressBarVisible.postValue(true)
         //TODO: actual API request
         Handler(Looper.getMainLooper()).postDelayed({
-            isLoginButtonEnabled.postValue(true);
-            isProgressBarVisible.postValue(false);
+            isLoginButtonEnabled.postValue(true)
+            isProgressBarVisible.postValue(false)
         },2000)
     }
 }
