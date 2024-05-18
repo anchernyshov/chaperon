@@ -6,4 +6,8 @@
     </style>
 
     <style name="Theme.Chaperon" parent="Base.Theme.Chaperon" />
+
+    <style name="accentLightBlue" parent="@style/Theme.AppCompat">
+        <item name="colorAccent">@color/light_blue</item>
+    </style>
 </resources>
