@@ -1,4 +1,4 @@
-package com.github.anchernyshov.chaperon
+package com.github.anchernyshov.chaperon.view
 
 import android.os.Bundle
 import android.text.Editable
@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
+import com.github.anchernyshov.chaperon.R
 import com.github.anchernyshov.chaperon.viewmodel.AuthActivityViewModel
 
 class AuthActivity : AppCompatActivity() {
