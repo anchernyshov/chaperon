@@ -3,9 +3,6 @@ package com.github.anchernyshov.chaperon.view
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ProgressBar
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -13,16 +10,19 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import com.github.anchernyshov.chaperon.R
+import com.github.anchernyshov.chaperon.databinding.ActivityAuthBinding
 import com.github.anchernyshov.chaperon.viewmodel.AuthActivityViewModel
 
 class AuthActivity : AppCompatActivity() {
 
     val viewModel: AuthActivityViewModel by viewModels()
+    private lateinit var binding: ActivityAuthBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_auth)
+        binding = ActivityAuthBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -30,12 +30,7 @@ class AuthActivity : AppCompatActivity() {
             insets
         }
 
-        val progressBar : ProgressBar = findViewById(R.id.activity_auth_loading_pb)
-        val loginButton : Button = findViewById(R.id.activity_auth_login_btn)
-        val usernameEditText : EditText = findViewById(R.id.activity_auth_username_txt)
-        val passwordEditText : EditText = findViewById(R.id.activity_auth_password_txt)
-
-        usernameEditText.addTextChangedListener((object : TextWatcher {
+        binding.activityAuthUsernameTxt.addTextChangedListener((object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 viewModel.setUsername(s.toString())
             }
@@ -43,7 +38,7 @@ class AuthActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         }))
 
-        passwordEditText.addTextChangedListener((object : TextWatcher {
+        binding.activityAuthPasswordTxt.addTextChangedListener((object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 viewModel.setPassword(s.toString())
             }
@@ -52,14 +47,14 @@ class AuthActivity : AppCompatActivity() {
         }))
 
         viewModel.isLoginButtonEnabled.observe(this) { flag ->
-            loginButton.isEnabled = flag
+            binding.activityAuthLoginBtn.isEnabled = flag
         }
 
         viewModel.isProgressBarVisible.observe(this) { flag ->
-            progressBar.isVisible = flag
+            binding.activityAuthLoadingPb.isVisible = flag
         }
 
-        loginButton.setOnClickListener {
+        binding.activityAuthLoginBtn.setOnClickListener {
             viewModel.onLoginButtonClicked()
         }
     }
