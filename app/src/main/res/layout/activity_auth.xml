@@ -31,7 +31,7 @@
         android:paddingRight="60dp">
 
         <EditText
-            android:id="@+id/activity_auth_username_txt"
+            android:id="@+id/activity_auth_username_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -40,7 +40,7 @@
             android:minHeight="48dp" />
 
         <EditText
-            android:id="@+id/activity_auth_password_txt"
+            android:id="@+id/activity_auth_password_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -54,6 +54,12 @@
             android:layout_height="wrap_content"
             android:enabled="false"
             android:text="Login" />
+
+        <TextView
+            android:id="@+id/activity_auth_result_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="" />
 
     </LinearLayout>
 

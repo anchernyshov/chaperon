@@ -1,9 +1,10 @@
 package com.github.anchernyshov.chaperon.viewmodel
 
-import android.os.Handler
-import android.os.Looper
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.*
+import com.github.anchernyshov.chaperon.model.LoginResponseModel
+import com.github.anchernyshov.chaperon.repository.AuthRepository
 
 class AuthActivityViewModel: ViewModel() {
 
@@ -16,9 +17,7 @@ class AuthActivityViewModel: ViewModel() {
     val isLoginButtonEnabled: MutableLiveData<Boolean> by lazy {
         MutableLiveData<Boolean>()
     }
-    val isProgressBarVisible: MutableLiveData<Boolean> by lazy {
-        MutableLiveData<Boolean>()
-    }
+    val loginResponseLiveData = MutableLiveData<LoginResponseModel>()
     private var isUsernameValid = false
     private var isPasswordValid = false
 
@@ -35,12 +34,11 @@ class AuthActivityViewModel: ViewModel() {
     }
 
     fun onLoginButtonClicked() {
-        isLoginButtonEnabled.postValue(false)
-        isProgressBarVisible.postValue(true)
-        //TODO: actual API request
-        Handler(Looper.getMainLooper()).postDelayed({
-            isLoginButtonEnabled.postValue(true)
-            isProgressBarVisible.postValue(false)
-        },2000)
+        CoroutineScope(Dispatchers.IO).launch {
+            val response = AuthRepository.makeLoginRequest(username.value, password.value)
+            withContext(Dispatchers.Main) {
+                loginResponseLiveData.postValue(response)
+            }
+        }
     }
 }

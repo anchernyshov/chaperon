@@ -30,7 +30,7 @@ class AuthActivity : AppCompatActivity() {
             insets
         }
 
-        binding.activityAuthUsernameTxt.addTextChangedListener((object : TextWatcher {
+        binding.activityAuthUsernameInput.addTextChangedListener((object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 viewModel.setUsername(s.toString())
             }
@@ -38,7 +38,7 @@ class AuthActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         }))
 
-        binding.activityAuthPasswordTxt.addTextChangedListener((object : TextWatcher {
+        binding.activityAuthPasswordInput.addTextChangedListener((object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 viewModel.setPassword(s.toString())
             }
@@ -50,12 +50,19 @@ class AuthActivity : AppCompatActivity() {
             binding.activityAuthLoginBtn.isEnabled = flag
         }
 
-        viewModel.isProgressBarVisible.observe(this) { flag ->
-            binding.activityAuthLoadingPb.isVisible = flag
+        viewModel.loginResponseLiveData.observe(this) { data ->
+            data?.let {
+                binding.activityAuthLoadingPb.isVisible = false
+                binding.activityAuthLoginBtn.isEnabled = true
+                binding.activityAuthResultTxt.text = data.token
+            }
         }
 
         binding.activityAuthLoginBtn.setOnClickListener {
+            binding.activityAuthLoadingPb.isVisible = true
+            binding.activityAuthLoginBtn.isEnabled = false
             viewModel.onLoginButtonClicked()
         }
+
     }
 }
