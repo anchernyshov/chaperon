@@ -7,4 +7,21 @@
     android:layout_height="match_parent"
     tools:context=".view.ContentActivity">
 
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:paddingLeft="60dp"
+        android:paddingRight="60dp">
+
+        <Button
+            android:id="@+id/activity_content_logout_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Logout" />
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

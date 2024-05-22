@@ -1,5 +1,8 @@
 package com.github.anchernyshov.chaperon.view
 
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -55,6 +58,18 @@ class AuthActivity : AppCompatActivity() {
                 binding.activityAuthLoadingPb.isVisible = false
                 binding.activityAuthLoginBtn.isEnabled = true
                 binding.activityAuthResultTxt.text = data.token
+                val sharedPreferences = getSharedPreferences("com.github.anchernyshov.chaperon", Context.MODE_PRIVATE)
+
+                val editor: SharedPreferences.Editor = sharedPreferences.edit()
+                editor.putString("PREF_AUTHENTICATION_TOKEN", data.token)
+                editor.apply()
+
+                val intent = Intent(
+                    this@AuthActivity,
+                    MainActivity::class.java
+                )
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                startActivity(intent)
             }
         }
 
